@@ -1,14 +1,15 @@
-package aplication;
+package exercicios;
 
 import db.DB;
+import db.DbIntegrityException;
 
-import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-public class Program {
+public class Exercicio240 {
 
-    public static void main(String[] args) {
+    public void exercicio240() {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -26,7 +27,7 @@ public class Program {
             System.out.println("Finalizado! " + linhasAlteradas + " linhas apagadas!");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DbIntegrityException(e.getMessage());
         } finally {
             DB.fecharStatement(ps);
             DB.fecharConexao();

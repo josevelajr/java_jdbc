@@ -1,29 +1,31 @@
-package aplication;
+package exercicios;
 
 import db.DB;
 
-import java.sql.*;
-import java.text.ParseException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
-public class Program {
-
-    public static void main(String[] args) {
+public class Exercicio239 {
+    public void exercicio239() {
 
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = DB.abrirConexao();
             ps = conn.prepareStatement(
-                    "DELETE FROM department "
+                    "UPDATE seller "
+                            + "SET BaseSalary = BaseSalary + ? "
                             + "WHERE "
-                            + "Id = ?");
+                            + "(DepartmentId = ?)");
 
-            ps.setInt(1, 2);
+            ps.setDouble(1, 200.0);
+            ps.setInt(2, 2);
 
             int linhasAlteradas = ps.executeUpdate();
 
-            System.out.println("Finalizado! " + linhasAlteradas + " linhas apagadas!");
+            System.out.println("Finalizado! " + linhasAlteradas + " linhas alteradas!");
 
         } catch (SQLException e) {
             e.printStackTrace();

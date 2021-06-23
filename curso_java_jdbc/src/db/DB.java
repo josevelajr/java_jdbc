@@ -4,16 +4,14 @@ import com.mysql.cj.exceptions.DataReadException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class DB {
 
     private static Connection conexao = null;
 
-    public static Connection getConexao() {
+    public static Connection abrirConexao() {
         if (conexao == null) {
             try {
                 Properties props = carregarPropriedades();
@@ -43,6 +41,26 @@ public class DB {
             return props;
         } catch (IOException e) {
             throw new DbException(e.getMessage());
+        }
+    }
+
+    public static void fecharStatement(Statement st) {
+        if (st != null) {
+            try {
+                st.close();
+            } catch (SQLException e) {
+                throw new DbException(e.getMessage());
+            }
+        }
+    }
+
+    public static void fecharResultSet(ResultSet rs) {
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                throw new DbException(e.getMessage());
+            }
         }
     }
 
